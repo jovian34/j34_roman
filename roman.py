@@ -9,6 +9,10 @@ def roman(letters):
         "I": 1,
     }
     subtract = ["C", "X", "I",]
+    return get_roman_value(letters, roman_values, subtract)
+
+
+def get_roman_value(letters, roman_values, subtract):
     value = 0
     last = None
     for letter in letters:
@@ -16,5 +20,5 @@ def roman(letters):
             value += roman_values[letter]
         else:
             value += roman_values[letter] - (2 * roman_values[last])
-        last = letter    
+        last = letter
     return value
