@@ -24,11 +24,11 @@ def check_for_invalid_characters(letters, roman_value_map):
             raise ValueError("This is not a valid Roman Numeral")
         
 def check_for_too_many_repeated_letters(letters):
-    if letter_repeated_more_than_three_times(letters):
+    if letter_repeated_more_than_permitted(letters):
         raise ValueError("This is not a valid Roman Numeral")
     
 
-def letter_repeated_more_than_three_times(letters):
+def letter_repeated_more_than_permitted(letters):
     repeat = 0
     last = None
     for letter in letters:
@@ -37,9 +37,8 @@ def letter_repeated_more_than_three_times(letters):
         else:
             repeat = 0
             last = letter
-        if letter in fives:
-            if repeat == 1:
-                return True
+        if letter in fives and repeat == 1:
+            return True
         if repeat == 3:
             return True
     return False
