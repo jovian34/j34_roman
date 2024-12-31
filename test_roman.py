@@ -142,12 +142,6 @@ def test_roman_takes_empty_sub_value_raises_error():
     assert str(excinfo.value) == "This is not a valid Roman Numeral"
 
 
-def test_roman_takes_empty_sub_value_raises_error():
-    with pytest.raises(ValueError) as excinfo:
-        roman("")
-    assert str(excinfo.value) == "This is not a valid Roman Numeral"
-
-
 def test_roman_takes_invalid_order_value_raises_error():
     with pytest.raises(ValueError) as excinfo:
         roman("MMCCM")
