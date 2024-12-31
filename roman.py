@@ -1,21 +1,26 @@
-def roman(letters):
-    roman_values = {
-        "M": 1000,
-        "D": 500,
-        "C": 100,
-        "L": 50,
-        "X": 10,
-        "V": 5,
-        "I": 1,
-    }
-    subtract = {"C", "X", "I",}
-    check_for_invalid_characters(letters, roman_values)
-    check_for_too_many_repeated_letters(letters)
-    return get_roman_value(letters, roman_values, subtract)
+roman_value_map = {
+    "M": 1000,
+    "D": 500,
+    "C": 100,
+    "L": 50,
+    "X": 10,
+    "V": 5,
+    "I": 1,
+}
+subtract = ["C", "X", "I",]
 
-def check_for_invalid_characters(letters, roman_values):
+roman_values = [ value for key, value in roman_value_map.items() ]
+
+
+def roman(letters):
+    check_for_invalid_characters(letters, roman_value_map)
+    check_for_too_many_repeated_letters(letters)
+    check_for_invalid_order(letters)
+    return get_roman_value(letters, roman_value_map, subtract)
+
+def check_for_invalid_characters(letters, roman_value_map):
     for letter in letters:
-        if letter not in roman_values:
+        if letter not in roman_value_map:
             raise ValueError("This is not a valid Roman Numeral")
         
 def check_for_too_many_repeated_letters(letters):
@@ -33,18 +38,47 @@ def letter_repeated_more_than_three_times(letters):
             last = letter
         if repeat == 3:
             return True
-    return False            
+    return False
 
-def get_roman_value(letters, roman_values, subtract):
+def check_for_invalid_order(letters):
+    letter_order = { order: [letter, roman_value_map[letter]] for order, letter in enumerate(letters) }
+    keys_to_delete = []
+    for key, values in letter_order.items():
+        if key == len(letter_order)-1:
+            pass
+        elif values[0] in subtract:
+            if values[1] < letter_order[key+1][1]:
+                letter_order[key] = [
+                    f"{letter_order[key][0]}{letter_order[key+1][0]}",
+                    letter_order[key+1][1] - letter_order[key][1]
+                ]
+                keys_to_delete.append(key+1)
+    for key in keys_to_delete:
+        del letter_order[key]
+    last_value = 0
+    value = 0
+    for order, values in letter_order.items():
+        if last_value == 0:
+            last_value = values[1]
+            value = values[1]
+        elif last_value <= values[1] and values[1] not in roman_values:
+            raise ValueError("This is not a valid Roman Numeral")
+        else:
+            last_value = values[1]
+            value += values[1]
+    return value    
+
+
+def get_roman_value(letters, roman_value_map, subtract):
     value = 0
     last = None
     for letter in letters:
-        if last not in subtract or roman_values[last] >= roman_values[letter]:
-            value += roman_values[letter]
-        elif last == "I" and roman_values[letter] > 10:
+        if last not in subtract or roman_value_map[last] >= roman_value_map[letter]:
+            value += roman_value_map[letter]
+        elif last == "I" and roman_value_map[letter] > 10:
             raise ValueError("This is not a valid Roman Numeral")
         elif last in subtract:
-            value += roman_values[letter] - (2 * roman_values[last])
+            value += roman_value_map[letter] - (2 * roman_value_map[last])
         last = letter
     if value > 0:
         return value

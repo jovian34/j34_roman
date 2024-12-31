@@ -1,10 +1,6 @@
 import pytest
 from roman import roman
 
-def test_function_exists():
-    assert roman
-
-
 def test_roman_takes_argument():
     assert roman("MMM")
 
