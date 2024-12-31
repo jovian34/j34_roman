@@ -9,7 +9,6 @@ roman_value_map = {
 }
 subtract = ["C", "X", "I",]
 fives = ["D", "L", "V"]
-
 roman_values = [ value for key, value in roman_value_map.items() ]
 
 
@@ -43,6 +42,7 @@ def letter_repeated_more_than_permitted(letters):
             return True
     return False
 
+
 def check_for_invalid_order(letters):
     letter_order, keys_to_delete = get_descending_value_groups(letters)
     delete_zero_value_keys(letter_order, keys_to_delete)
@@ -51,6 +51,7 @@ def check_for_invalid_order(letters):
         return value
     else:
         raise ValueError("This is not a valid Roman Numeral")
+    
 
 def calculate_integer_value(letter_order):
     last_value = 0
@@ -66,9 +67,11 @@ def calculate_integer_value(letter_order):
             value += values[1]
     return value
 
+
 def delete_zero_value_keys(letter_order, keys_to_delete):
     for key in keys_to_delete:
         del letter_order[key]
+
 
 def get_descending_value_groups(letters):
     letter_order = { order: [letter, roman_value_map[letter]] for order, letter in enumerate(letters) }
@@ -85,6 +88,7 @@ def get_descending_value_groups(letters):
                 keys_to_delete.append(key+1)
             raise_error_when_sub_value_is_too_low(letter_order, key, values)
     return letter_order,keys_to_delete
+
 
 def raise_error_when_sub_value_is_too_low(letter_order, key, values):
     if values[0] == "I" and letter_order[key+1][1] > 10:
