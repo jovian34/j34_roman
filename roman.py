@@ -15,8 +15,7 @@ roman_values = [ value for key, value in roman_value_map.items() ]
 def roman(letters):
     check_for_invalid_characters(letters, roman_value_map)
     check_for_too_many_repeated_letters(letters)
-    check_for_invalid_order(letters)
-    return get_roman_value(letters, roman_value_map, subtract)
+    return check_for_invalid_order(letters)
 
 def check_for_invalid_characters(letters, roman_value_map):
     for letter in letters:
@@ -53,6 +52,8 @@ def check_for_invalid_order(letters):
                     letter_order[key+1][1] - letter_order[key][1]
                 ]
                 keys_to_delete.append(key+1)
+            if values[0] == "I" and letter_order[key+1][1] > 10:
+                raise ValueError("This is not a valid Roman Numeral")
     for key in keys_to_delete:
         del letter_order[key]
     last_value = 0
@@ -66,20 +67,6 @@ def check_for_invalid_order(letters):
         else:
             last_value = values[1]
             value += values[1]
-    return value    
-
-
-def get_roman_value(letters, roman_value_map, subtract):
-    value = 0
-    last = None
-    for letter in letters:
-        if last not in subtract or roman_value_map[last] >= roman_value_map[letter]:
-            value += roman_value_map[letter]
-        elif last == "I" and roman_value_map[letter] > 10:
-            raise ValueError("This is not a valid Roman Numeral")
-        elif last in subtract:
-            value += roman_value_map[letter] - (2 * roman_value_map[last])
-        last = letter
     if value > 0:
         return value
     else:
