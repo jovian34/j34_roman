@@ -45,8 +45,8 @@ def test_roman_takes_xx_returns_20():
     assert roman("XX") == 20
 
 
-def test_roman_takes_xm_returns_990():
-    assert roman("XM") == 990
+def test_roman_takes_cmxc_returns_990():
+    assert roman("CMXC") == 990
 
 
 def test_roman_takes_cmx_returns_910():
@@ -81,8 +81,16 @@ def test_roman_takes_mmmcmxcviii_returns_3998():
     assert roman("MMMCMXCVIII") == 3998
 
 
+def test_roman_takes_mmxxiii_returns_2023():
+    assert roman("MMXXIII") == 2023
+
+
 def test_roman_takes_ix_returns_9():
     assert roman("IX") == 9
+
+
+def test_roman_takes_mmcdlxxv_returns_2475():
+    assert roman("MMCDLXXV") == 2475
 
 
 def test_roman_takes_mmmcmxcix_returns_3999():
@@ -138,7 +146,31 @@ def test_roman_takes_empty_sub_value_raises_error():
     assert str(excinfo.value) == "This is not a valid Roman Numeral"
 
 
-def test_roman_takes_invalid_order_value_raises_error():
+def test_roman_takes_invalid_order_value_mmccm_raises_error():
     with pytest.raises(ValueError) as excinfo:
         roman("MMCCM")
+    assert str(excinfo.value) == "This is not a valid Roman Numeral"
+
+
+def test_roman_takes_invalid_order_value_dm_raises_error():
+    with pytest.raises(ValueError) as excinfo:
+        roman("DM")
+    assert str(excinfo.value) == "This is not a valid Roman Numeral"
+
+
+def test_roman_takes_invalid_order_value_xm_raises_error():
+    with pytest.raises(ValueError) as excinfo:
+        roman("XM")
+    assert str(excinfo.value) == "This is not a valid Roman Numeral"
+
+
+def test_roman_takes_invalid_order_value_mmmcmdd_raises_error():
+    with pytest.raises(ValueError) as excinfo:
+        roman("MMMCMDD")
+    assert str(excinfo.value) == "This is not a valid Roman Numeral"
+
+
+def test_roman_takes_invalid_order_value_mmmcmc_raises_error():
+    with pytest.raises(ValueError) as excinfo:
+        roman("MMMCMC")
     assert str(excinfo.value) == "This is not a valid Roman Numeral"
