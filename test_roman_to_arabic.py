@@ -1,5 +1,5 @@
 import pytest
-from roman import roman
+from roman_to_arabic import roman
 
 def test_roman_takes_argument():
     assert roman("MMM")
