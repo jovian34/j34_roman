@@ -17,21 +17,21 @@ class ArabicToRoman:
         }
         self.reverse_map = {}
 
+
     def convert(self, arabic):
         arabic = self.check_for_non_integer_values(arabic)
         if arabic > 3999 or arabic < 1:
             raise ValueError("This is not a valid integer for a Roman numeral")
         roman = self.create_conversion(arabic)
         return roman
+    
 
     def create_conversion(self, arabic):
         roman = ""
         for value in self.value_map:
             while arabic >= value:
-                roman = roman + self.value_map[value]
-                arabic = arabic - value
-            if arabic == 0:
-                break
+                roman += self.value_map[value]
+                arabic -= value
         return roman
         
 

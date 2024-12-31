@@ -42,3 +42,8 @@ def test_conversion_works_for_1():
     conversion = arabic_to_roman.ArabicToRoman()
     assert conversion.convert(1) == "I"
 
+
+def test_conversion_works_for_2024():
+    conversion = arabic_to_roman.ArabicToRoman()
+    assert conversion.convert(2024) == "MMXXIV"
+
