@@ -104,3 +104,51 @@ def test_ten_roman_numerals_from_random_generator():
     assert roman("CMV") == 905
     assert roman("CDVIII") == 408
     assert roman("DXLVIII") == 548
+
+
+def test_roman_takes_xxxx_raises_error():
+    with pytest.raises(ValueError) as excinfo:
+        roman("XXXX")
+    assert str(excinfo.value) == "This is not a valid Roman Numeral"
+
+
+def test_roman_takes_mmmmx_raises_error():
+    with pytest.raises(ValueError) as excinfo:
+        roman("MMMMX")
+    assert str(excinfo.value) == "This is not a valid Roman Numeral"
+
+
+def test_roman_takes_non_roman_letter_raises_error():
+    with pytest.raises(ValueError) as excinfo:
+        roman("MMXG")
+    assert str(excinfo.value) == "This is not a valid Roman Numeral"
+
+
+def test_roman_takes_too_small_sub_value_raises_error():
+    with pytest.raises(ValueError) as excinfo:
+        roman("MIM")
+    assert str(excinfo.value) == "This is not a valid Roman Numeral"
+
+
+def test_roman_takes_lower_case_value_raises_error():
+    with pytest.raises(ValueError) as excinfo:
+        roman("mcmxcii")
+    assert str(excinfo.value) == "This is not a valid Roman Numeral"
+
+
+def test_roman_takes_empty_sub_value_raises_error():
+    with pytest.raises(ValueError) as excinfo:
+        roman("")
+    assert str(excinfo.value) == "This is not a valid Roman Numeral"
+
+
+def test_roman_takes_empty_sub_value_raises_error():
+    with pytest.raises(ValueError) as excinfo:
+        roman("")
+    assert str(excinfo.value) == "This is not a valid Roman Numeral"
+
+
+def test_roman_takes_invalid_order_value_raises_error():
+    with pytest.raises(ValueError) as excinfo:
+        roman("MMCCM")
+    assert str(excinfo.value) == "This is not a valid Roman Numeral"
